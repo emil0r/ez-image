@@ -8,7 +8,6 @@
   (:use [digest :only [md5]])
   (:import [java.io File]
            [java.awt Color]
-           [java.awt.image BufferedImageOp]
            [javax.imageio ImageIO]
            [org.imgscalr Scalr]))
 
@@ -125,7 +124,10 @@
     (let [digested-filename (generate-filename filename commands)]
       (if-let [cached (get @-cache digested-filename)]
         (:web-path cached)
-        (if-let [img (apply convert filename commands)]
-          (do
-            (save! img (str (:save-path @-cache) digested-filename))
-            (:web-path (add-to-cache digested-filename))))))))
+        (if (fs/exists? (str (:save-path @-cache) digested-filename))
+          (:web-path (add-to-cache digested-filename))
+          (if-let [img (apply convert filename commands)]
+            (do
+              (save! img (str (:save-path @-cache) digested-filename))
+              (:web-path (add-to-cache digested-filename)))))))))
+
