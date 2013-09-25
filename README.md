@@ -11,7 +11,7 @@ Easy image manipulation. Wrapper around imgscalr. No need for external libraries
 (ez-image/save! img "path/to/my/new-image.jpg")
 
 ;; alternatively you can set up a simple cache
-(ez-image/setup! ["path/to/cache/directory/" "/web-path/"])
+(ez-image/setup! "path/to/cache/directory/" "/web-path/")
 ;; you can chain your commands
 (ez-image/cache "path/to/my/image.jpg" [:constrain 600 400] [:crop 200 200]) ;; will give back "/web-path/<md5-sum>.jpg"
 ```
