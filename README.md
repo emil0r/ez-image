@@ -31,17 +31,15 @@ Original image. Weighing in at 778kb at 1920x1080 pixels.
 
 ;; image will be constrained to a box of 200x100 pixels
 (ez-image/convert img [:constrain 200 100])
+
+;; image will be constrained to a box of 200x100 pixles
+;; mode is imported from ez-image.mode and holds automatic, speed, balanced, quality and ultra-quality
+(ez-image/convert img [:constrain mode 200 100])
 ```
 | [:constrain 100] | [:constrain 200 100] |
 | ---------------- | -------------------- |
 | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-constrain-100.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-constrain-200x100.jpg) |
 
-
-```clojure
-;; image will be constrained to a box of 200x100 pixles
-;; mode is imported from ez-image.mode and holds automatic, speed, balanced, quality and ultra-quality
-(ez-image/convert img [:constrain mode 200 100])
-```
 
 ### distort
 ```clojure
