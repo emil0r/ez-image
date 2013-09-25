@@ -2,6 +2,11 @@
 
 Easy image manipulation. Wrapper around imgscalr. No need for external libraries.
 
+## Dependancy
+```clojure
+[ez-image "1.0"]
+```
+
 ## Usage
 
 ```clojure
