@@ -1,6 +1,6 @@
 # ez-image
 
-Easy image manipulation. Wrapper around imgscalr. No need for extra libraries.
+Easy image manipulation. Wrapper around imgscalr. No need for external libraries.
 
 ## Usage
 
