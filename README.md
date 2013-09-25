@@ -21,6 +21,9 @@ Easy image manipulation. Wrapper around imgscalr. No need for external libraries
 (ez-image/cache "path/to/my/image.jpg" [:constrain 600 400] [:crop 200 200]) ;; will give back "/web-path/<md5-sum>.jpg"
 ```
 
+Original image. Weighing in at 778kb at 1920x1080 pixels.  
+![](https://raw.github.com/emil0r/ez-image/screenshots/left-right.jpg)
+
 ### constrain
 ```clojure
 ;; image will be constrained to a box of 100x100 pixels
@@ -28,7 +31,13 @@ Easy image manipulation. Wrapper around imgscalr. No need for external libraries
 
 ;; image will be constrained to a box of 200x100 pixels
 (ez-image/convert img [:constrain 200 100])
+```
+| [:constrain 100] | [:constrain 200 100] |
+| ---------------- | -------------------- |
+| ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-constrain-100.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-constrain-200x100.jpg) |
 
+
+```clojure
 ;; image will be constrained to a box of 200x100 pixles
 ;; mode is imported from ez-image.mode and holds automatic, speed, balanced, quality and ultra-quality
 (ez-image/convert img [:constrain mode 200 100])
@@ -42,6 +51,10 @@ Easy image manipulation. Wrapper around imgscalr. No need for external libraries
 ;; image will be distorted to a box of 200x100 pixels
 (ez-image/convert img [:distort 200 100])
 ```
+| [:distort 100] | [:distort 200 100] |
+| -------------- | ------------------ |
+| ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-distort-100.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-distort-200x100.jpg) |
+
 
 ### crop
 ```clojure
@@ -51,6 +64,10 @@ Easy image manipulation. Wrapper around imgscalr. No need for external libraries
 ;; image will be cropped from the point 200,300 to a box of 200x100 pixels
 (ez-image/convert img [:crop 200 300 200 100])
 ```
+| [:crop 200 100] | [:crop 200 300 200 100] |
+| --------------- | ----------------------- |
+| ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-crop-200x100.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-crop-200x300-200x100.jpg) |
+
 
 ### pad
 ```clojure
@@ -58,14 +75,21 @@ Easy image manipulation. Wrapper around imgscalr. No need for external libraries
 (ez-image/convert img [:pad 50])
 
 ;; image will be padded with a padding of 50 pixels. the colour will be red
-(ez-image/convert img [:pad 50 Color/Red])
+(ez-image/convert img [:pad 50 Color/RED])
 
 ;; image will be padded with a padding of 50 pixels. the colour will be green
 (ez-image/convert img [:pad 50 [0 255 0]])
 
 ;; image will be padded with a padding of 50 pixels. the colour will be blue and have an alpha of 50%
-(ez-image/convert img [:pad 50 [0 255 0 128])
+(ez-image/convert img [:pad 50 [0 0 255 128])
 ```
+
+[:constrain 200] run on all of the paddings to limit the size  
+
+| [:pad 50] | [:pad 50 Color/RED] | [:pad 50 [0 255 0]] | [:pad 50 [0 0 255 128]] |
+| --------- | ------------------- | ------------------- | ----------------------- |
+| ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-pad-50.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-pad-50-red.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-pad-50-green.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-pad-50-blue-alpha-50.jpg) |
+
 
 ### rotate
 ```clojure
@@ -85,11 +109,19 @@ Easy image manipulation. Wrapper around imgscalr. No need for external libraries
 (ez-image/convert img [:rotate :flip-vert])
 ```
 
+[:constrain 200] run on all of the rotations to limit the size  
+
+| [:rotate :cw-90] | [:rotate :cw-180] | [:rotate :cw-270] | [:rotate :flip-horz] | [:rotate :flip-vert] |
+| ---------------- | ----------------- | ----------------- | -------------------- | -------------------- |
+| ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-cw-90.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-cw-180.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-cw-270.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-flip-horz.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-flip-vert.jpg) |
+
+
 ### chaining
 ```clojure
 ;; the image will have the following commands applied to it
 (ez-image/convert img [:constrain 500] [:distort 700 800] [:crop 400 500] [:rotate :cw-90] [:pad 200])
 ```
+![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-chained.jpg)
 
 ## License
 
