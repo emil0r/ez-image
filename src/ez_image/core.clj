@@ -59,7 +59,7 @@
    (nil? (get @-cache :web-path)) (throw (Exception. ":web-path not set"))
    :else true))
 
-(defn- resize
+(defn- constrain
   ([img size]
      (Scalr/resize img size nil))
   ([img width height]
@@ -100,8 +100,8 @@
     img))
 
 (defmulti ^:private command (fn [_ c] (first c)))
-(defmethod ^:private command :resize [img c]
-  (apply resize img (rest c)))
+(defmethod ^:private command :constrain [img c]
+  (apply constrain img (rest c)))
 (defmethod ^:private command :distort [img c]
   (apply distort img (rest c)))
 (defmethod ^:private command :crop [img c]
