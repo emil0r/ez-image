@@ -98,6 +98,12 @@
     :flip-vert (Scalr/rotate img rotation/flip-vert nil)
     img))
 
+(defn flip [img orientation]
+  (case orientation
+    :horz (Scalr/rotate img rotation/flip-horz nil)
+    :vert (Scalr/rotate img rotation/flip-vert nil)
+    img))
+
 (defmulti ^:private command (fn [_ c] (first c)))
 (defmethod ^:private command :constrain [img c]
   (apply constrain img (rest c)))
@@ -109,6 +115,8 @@
   (apply pad img (rest c)))
 (defmethod ^:private command :rotate [img c]
   (apply rotate img (rest c)))
+(defmethod ^:private command :flip [img c]
+  (apply flip img (rest c)))
 (defmethod ^:private command :default [img _]
   img)
 
