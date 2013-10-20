@@ -9,4 +9,5 @@ pom.xml.asc
 /.nrepl-port
 .emacs*
 .DS_Store
-media/
+/media
+/blackboard
