@@ -4,7 +4,7 @@ Easy image manipulation. Wrapper around imgscalr. No need for external libraries
 
 ## Dependancy
 ```clojure
-[ez-image "1.0"]
+[ez-image "1.0.1"]
 ```
 
 ## Usage
@@ -100,18 +100,31 @@ Original image. Weighing in at 778kb at 1920x1080 pixels.
 ;; image will be rotated 270 degrees clockwise
 (ez-image/convert img [:rotate :cw-270])
 
-;; image will be flipped horizontally
-(ez-image/convert img [:rotate :flip-horz])
-
-;; image will be flipped vertically
-(ez-image/convert img [:rotate :flip-vert])
+;; you can still use :rotate to flip the image, but it is 
+;; advised to use :flip as described below instead
 ```
 
 [:constrain 200] run on all of the rotations to limit the size  
 
-| [:rotate :cw-90] | [:rotate :cw-180] | [:rotate :cw-270] | [:rotate :flip-horz] | [:rotate :flip-vert] |
-| ---------------- | ----------------- | ----------------- | -------------------- | -------------------- |
-| ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-cw-90.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-cw-180.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-cw-270.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-flip-horz.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-flip-vert.jpg) |
+| [:rotate :cw-90] | [:rotate :cw-180] | [:rotate :cw-270] |
+| ---------------- | ----------------- | ----------------- |
+| ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-cw-90.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-cw-180.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-cw-270.jpg) |
+
+### flip
+```clojure
+;; image will be flipped horizontally
+(ez-image/convert img [:flip :horz])
+
+;; image will be flipped vertically
+(ez-image/convert img [:flip :vert])
+```
+
+
+[:constrain 200] run on all of the rotations to limit the size  
+
+| [:flip :horz] | [:flip :vert] |
+| ---------------- | ----------------- |
+|  ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-flip-horz.jpg) | ![](https://raw.github.com/emil0r/ez-image/screenshots/left-right-rotate-flip-vert.jpg) |
 
 
 ### chaining
