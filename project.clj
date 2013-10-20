@@ -1,4 +1,4 @@
-(defproject ez-image "1.0"
+(defproject ez-image "1.0.1"
   :description "Lightweight image manipulation"
   :url "https://github.com/emil0r/ez-image"
   :license {:name "Eclipse Public License"
