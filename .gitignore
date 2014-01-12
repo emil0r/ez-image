@@ -11,3 +11,5 @@ pom.xml.asc
 .DS_Store
 /media
 /blackboard
+/.idea
+*.iml

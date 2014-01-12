@@ -73,6 +73,14 @@
      (Scalr/resize img mode/fit-exact width height nil)))
 
 (defn- crop
+  ([img]
+   (let [width (.getWidth img)
+         height (.getHeight img)
+         size (min width height)
+         [x y] (if (> width height)
+                 [(int (/ (- width size) 2)) 0]
+                 [0 (int (/ (- height size) 2))])]
+      (Scalr/crop img x y size size nil)))
   ([img width height]
      (Scalr/crop img width height nil))
   ([img x y width height]
@@ -89,7 +97,7 @@
            (Scalr/pad img padding (Color. r g b a) nil)))
        (Scalr/pad img padding color nil))))
 
-(defn rotate [img rotation]
+(defn- rotate [img rotation]
   (case rotation
     :cw-90 (Scalr/rotate img rotation/cw-90 nil)
     :cw-180 (Scalr/rotate img rotation/cw-180 nil)
@@ -98,7 +106,7 @@
     :flip-vert (Scalr/rotate img rotation/flip-vert nil)
     img))
 
-(defn flip [img orientation]
+(defn- flip [img orientation]
   (case orientation
     :horz (Scalr/rotate img rotation/flip-horz nil)
     :vert (Scalr/rotate img rotation/flip-vert nil)
