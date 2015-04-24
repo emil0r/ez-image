@@ -4,7 +4,7 @@ Easy image manipulation. Wrapper around imgscalr. No need for external libraries
 
 ## Dependancy
 ```clojure
-[ez-image "1.0.2"]
+[ez-image "1.0.3"]
 ```
 
 ## Usage
@@ -16,7 +16,16 @@ Easy image manipulation. Wrapper around imgscalr. No need for external libraries
 (ez-image/save! img "path/to/my/new-image.jpg")
 
 ;; alternatively you can set up a simple cache
-(ez-image/setup! "path/to/cache/directory/" "/web-path/")
+(ez-image/setup! {:save-path "path/to/cache/directory/" 
+                  :web-path "/web-path/"})
+;; it's also possible to set up a base directory where files will be looked for
+;; this is a good option if you only have the relative paths and never the full path
+(ez-image/setup! {:save-path "path/to/cache/directory/" 
+                  :web-path "/web-path/"
+                  :base-dir "/path/to/directory/with/images/"
+                  :sep "/" ;; default separator for the paths is /, use this option to change it
+                  })
+
 ;; you can chain your commands
 (ez-image/cache "path/to/my/image.jpg" [:constrain 600 400] [:crop 200 200]) ;; will give back "/web-path/<md5-sum>.jpg"
 ```
