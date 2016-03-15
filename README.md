@@ -68,6 +68,9 @@ Original image. Weighing in at 778kb at 1920x1080 pixels.
 ;; image will be cropped to a box
 (ez-image/convert img [:crop])
 
+;; image will be cropped according to the ratio
+(ez-image/convert img [:crop 16/9])
+
 ;; image will be cropped from the top left to a box of 200x100 pixels
 (ez-image/convert img [:crop 200 100])
 

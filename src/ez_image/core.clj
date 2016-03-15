@@ -17,15 +17,15 @@
 (defonce ^:private -options (atom {}))
 (defn setup!
   ([{:keys [save-path web-path base-dir sep] :as options}]
-     (swap! -options assoc :save-path save-path)
-     (swap! -options assoc :web-path web-path)
-     (swap! -options assoc :base-dir base-dir)
-     (if sep
-       (alter-var-root #'sep (fn [old-value] sep))))
+   (swap! -options assoc :save-path save-path)
+   (swap! -options assoc :web-path web-path)
+   (swap! -options assoc :base-dir base-dir)
+   (if sep
+     (alter-var-root #'sep (fn [old-value] sep))))
   ([save-path web-path]
-     ^{:deprecated "Use the options arity instead"}
-     (swap! -options assoc :save-path save-path)
-     (swap! -options assoc :web-path web-path)))
+   ^{:deprecated "Use the options arity instead"}
+   (swap! -options assoc :save-path save-path)
+   (swap! -options assoc :web-path web-path)))
 
 (defn- get-path [filename]
   (if-let [base-dir (:base-dir @-options)]
@@ -49,22 +49,22 @@
 
 (defn clear!
   ([]
-     (reset! -cache {}))
+   (reset! -cache {}))
   ([filename]
-     (swap! -cache dissoc filename)))
+   (swap! -cache dissoc filename)))
 
 (defn delete!
   ([]
-     (if-let [save-path (:save-path @-options)]
-       (do
-         (fs/delete-dir save-path)
-         (fs/mkdir save-path)
-         (clear!))))
+   (if-let [save-path (:save-path @-options)]
+     (do
+       (fs/delete-dir save-path)
+       (fs/mkdir save-path)
+       (clear!))))
   ([filename]
-     (if-let [path (:save-path (get @-cache filename))]
-       (do
-         (fs/delete path)
-         (clear! filename)))))
+   (if-let [path (:save-path (get @-cache filename))]
+     (do
+       (fs/delete path)
+       (clear! filename)))))
 
 (defn- add-to-cache [digested-filename]
   (let [to-cache {:save-path (str (:save-path @-options) digested-filename)
@@ -77,23 +77,30 @@
 
 (defn- try-cache-values []
   (cond
-   (nil? (get @-options :save-path)) (throw (Exception. ":save-path not set"))
-   (nil? (get @-options :web-path)) (throw (Exception. ":web-path not set"))
-   :else true))
+    (nil? (get @-options :save-path)) (throw (Exception. ":save-path not set"))
+    (nil? (get @-options :web-path)) (throw (Exception. ":web-path not set"))
+    :else true))
+
+(defn calc-crop-area [ratio width height]
+  (if (> ratio (/ width height))
+    (let [r-height (/ width ratio)]
+      [[0 (int (/ (- height r-height) 2))] width (int r-height)])
+    (let [r-width (* height ratio)]
+      [[(int (/ (- width r-width) 2)) 0] (int r-width) height])))
 
 (defn- constrain
   ([img size]
-     (Scalr/resize img size nil))
+   (Scalr/resize img size nil))
   ([img width height]
-     (Scalr/resize img width height nil))
+   (Scalr/resize img width height nil))
   ([img method width height]
-     (Scalr/resize img method width height nil)))
+   (Scalr/resize img method width height nil)))
 
 (defn- distort
   ([img size]
-     (Scalr/resize img mode/fit-exact size nil))
+   (Scalr/resize img mode/fit-exact size nil))
   ([img width height]
-     (Scalr/resize img mode/fit-exact width height nil)))
+   (Scalr/resize img mode/fit-exact width height nil)))
 
 (defn- crop
   ([img]
@@ -103,22 +110,25 @@
          [x y] (if (> width height)
                  [(int (/ (- width size) 2)) 0]
                  [0 (int (/ (- height size) 2))])]
-      (Scalr/crop img x y size size nil)))
-  ([img width height]
-     (Scalr/crop img width height nil))
-  ([img x y width height]
+     (Scalr/crop img x y size size nil)))
+  ([img ratio]
+   (let [[[x y] width height] (calc-crop-area ratio (.getWidth img) (.getHeight img))]
      (Scalr/crop img x y width height nil)))
+  ([img width height]
+   (Scalr/crop img width height nil))
+  ([img x y width height]
+   (Scalr/crop img x y width height nil)))
 
 (defn- pad
   ([img padding]
-     (Scalr/pad img padding nil))
+   (Scalr/pad img padding nil))
   ([img padding color]
-     (if (vector? color)
-       (let [[r g b a] color]
-         (if (nil? a)
-           (Scalr/pad img padding (Color. r g b) nil)
-           (Scalr/pad img padding (Color. r g b a) nil)))
-       (Scalr/pad img padding color nil))))
+   (if (vector? color)
+     (let [[r g b a] color]
+       (if (nil? a)
+         (Scalr/pad img padding (Color. r g b) nil)
+         (Scalr/pad img padding (Color. r g b a) nil)))
+     (Scalr/pad img padding color nil))))
 
 (defn- rotate [img rotation]
   (case rotation
