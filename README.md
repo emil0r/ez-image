@@ -4,7 +4,7 @@ Easy image manipulation. Wrapper around imgscalr. No need for external libraries
 
 ## Dependancy
 ```clojure
-[ez-image "1.0.3"]
+[ez-image "1.0.4"]
 ```
 
 ## Usage
