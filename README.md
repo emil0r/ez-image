@@ -151,7 +151,7 @@ Original image. Weighing in at 778kb at 1920x1080 pixels.
 
 ## License
 
-Copyright © 2013 Emil Bengtsson
+Copyright © 2013-2016 Emil Bengtsson
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
